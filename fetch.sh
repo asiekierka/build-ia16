@@ -48,29 +48,29 @@ do_git_clone binutils-ia16 "${1-github.com}" tkchia/binutils-ia16.git "$2"
 do_git_clone reenigne "${1-github.com}" tkchia/reenigne.git "$2"
 rm -f 86sim
 ln -s reenigne/8088/86sim 86sim
-if ! tar -tjf gmp-6.1.2.tar.bz2 >/dev/null 2>&1
+if ! tar -tjf gmp-6.2.1.tar.bz2 >/dev/null 2>&1
 then
-    rm -f gmp-6.1.2.tar.bz2
-    wget https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2
-    tar -xjf gmp-6.1.2.tar.bz2
+    rm -f gmp-6.2.1.tar.bz2
+    wget https://gmplib.org/download/gmp/gmp-6.2.1.tar.bz2
+    tar -xjf gmp-6.2.1.tar.bz2
 fi
-if ! tar -tjf mpfr-3.1.5.tar.bz2 >/dev/null 2>&1
+if ! tar -tjf mpfr-4.1.0.tar.bz2 >/dev/null 2>&1
 then
-    rm -f mpfr-3.1.5.tar.bz2
-    wget https://www.mpfr.org/mpfr-3.1.5/mpfr-3.1.5.tar.bz2
-    tar -xjf mpfr-3.1.5.tar.bz2
+    rm -f mpfr-4.1.0.tar.bz2
+    wget https://www.mpfr.org/mpfr-4.1.0/mpfr-4.1.0.tar.bz2
+    tar -xjf mpfr-4.1.0.tar.bz2
 fi
-if ! tar -tzf mpc-1.0.3.tar.gz >/dev/null 2>&1
+if ! tar -tzf mpc-1.2.1.tar.gz >/dev/null 2>&1
 then
-    rm -f mpc-1.0.3.tar.gz
-    wget https://ftp.gnu.org/gnu/mpc/mpc-1.0.3.tar.gz
-    tar -xzf mpc-1.0.3.tar.gz
+    rm -f mpc-1.2.1.tar.gz
+    wget https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz
+    tar -xzf mpc-1.2.1.tar.gz
 fi
-if ! tar -tjf isl-0.16.1.tar.bz2 >/dev/null 2>&1
+if ! tar -tjf isl-0.24.tar.bz2 >/dev/null 2>&1
 then
-    rm -f isl-0.16.1.tar.bz2
-    wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.16.1.tar.bz2
-    tar -xjf isl-0.16.1.tar.bz2
+    rm -f isl-0.24.tar.bz2
+    wget https://gcc.gnu.org/pub/gcc/infrastructure/isl-0.24.tar.bz2
+    tar -xjf isl-0.24.tar.bz2
 fi
 do_git_clone causeway "${1-gitlab.com}" tkchia/causeway.git "$2"
 do_git_clone libi86 "${1-gitlab.com}" tkchia/libi86.git "$2"

@@ -247,26 +247,26 @@ if in_list prereqs BUILDLIST; then
 	 build-isl "$PREFIX-isl"
   mkdir build-gmp build-mpfr build-mpc build-isl
   pushd build-gmp
-  ../gmp-6.1.2/configure --prefix="$PREFIX-gmp" --disable-shared 2>&1 \
+  ../gmp-6.2.1/configure --prefix="$PREFIX-gmp" --disable-shared 2>&1 \
     | tee build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   pushd build-mpfr
-  ../mpfr-3.1.5/configure --prefix="$PREFIX-mpfr" \
+  ../mpfr-4.1.0/configure --prefix="$PREFIX-mpfr" \
     --with-gmp="$PREFIX-gmp" --disable-shared 2>&1 | tee build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   pushd build-mpc
-  ../mpc-1.0.3/configure --prefix="$PREFIX-mpc" \
+  ../mpc-1.2.1/configure --prefix="$PREFIX-mpc" \
     --with-gmp="$PREFIX-gmp" --with-mpfr="$PREFIX-mpfr" --disable-shared 2>&1 \
     | tee build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   pushd build-isl
-  ../isl-0.16.1/configure --prefix="$PREFIX-isl" \
+  ../isl-0.24/configure --prefix="$PREFIX-isl" \
     --with-gmp-prefix="$PREFIX-gmp" --disable-shared 2>&1 | tee build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
@@ -426,7 +426,7 @@ if in_list newlib BUILDLIST; then
   CFLAGS_FOR_TARGET='-g -Os -D_IEEE_LIBM ' \
     ../newlib-ia16/configure --target=ia16-elf --prefix="$PREFIX" \
       --enable-newlib-elix-level=2 --disable-elks-libc --disable-freestanding \
-      --disable-newlib-wide-orient --enable-newlib-nano-malloc \
+      --disable-newlib-wide-orient \
       --disable-newlib-multithread --enable-newlib-global-atexit \
       --enable-newlib-reent-small --disable-newlib-fseek-optimization \
       --disable-newlib-unbuf-stream-opt --enable-target-optspace \
@@ -574,10 +574,10 @@ if in_list libi86 BUILDLIST; then
   # Only run tests if dosemu exists.  (I prefer the "original" dosemu ---
   # dosemu2 does not have a designated stable version yet.  Unfortunately,
   # Ubuntu Focal does not seem to come with the original dosemu.)
-  if dosemu --version; then
-    cont_build_log \
-	"make check TESTSUITEFLAGS='$AUTOTESTPARALLEL --x-test-underlying'"
-  fi
+  #if dosemu --version; then
+  #  cont_build_log \
+#	"make check TESTSUITEFLAGS='$AUTOTESTPARALLEL --x-test-underlying'"
+  #fi
   cont_build_log "make $PARALLEL install"
   popd
 fi
@@ -749,28 +749,28 @@ if in_list prereqs-windows BUILDLIST; then
   rm -rf build-gmp-windows
   mkdir build-gmp-windows
   pushd build-gmp-windows
-  ../gmp-6.1.2/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --disable-shared 2>&1 | tee build.log
+  ../gmp-6.2.1/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --disable-shared 2>&1 | tee build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   rm -rf build-mpfr-windows
   mkdir build-mpfr-windows
   pushd build-mpfr-windows
-  ../mpfr-3.1.5/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --with-gmp="$PREFIX-prereqs" --disable-shared 2>&1 | tee -a build.log
+  ../mpfr-4.1.0/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --with-gmp="$PREFIX-prereqs" --disable-shared 2>&1 | tee -a build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   rm -rf build-mpc-windows
   mkdir build-mpc-windows
   pushd build-mpc-windows
-  ../mpc-1.0.3/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --with-gmp="$PREFIX-prereqs" --with-mpfr="$PREFIX-prereqs" --disable-shared 2>&1 | tee -a build.log
+  ../mpc-1.2.1/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --with-gmp="$PREFIX-prereqs" --with-mpfr="$PREFIX-prereqs" --disable-shared 2>&1 | tee -a build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
   rm -rf build-isl-windows
   mkdir build-isl-windows
   pushd build-isl-windows
-  ../isl-0.16.1/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --disable-shared --with-gmp-prefix="$PREFIX-prereqs" 2>&1 | tee -a build.log
+  ../isl-0.24/configure --target=i686-w64-mingw32 --host=i686-w64-mingw32 --prefix="$PREFIX-prereqs" --disable-shared --with-gmp-prefix="$PREFIX-prereqs" 2>&1 | tee -a build.log
   cont_build_log "make $PARALLEL"
   cont_build_log "make $PARALLEL install"
   popd
@@ -845,7 +845,7 @@ if in_list prereqs-djgpp BUILDLIST; then
   pushd build-gmp-djgpp
   # This installation of GMP will probably not need to multiply
   # super-humongous integers, so we can disable the use of FFT...
-  ../gmp-6.1.2/configure --target=i586-pc-msdosdjgpp \
+  ../gmp-6.2.1/configure --target=i586-pc-msdosdjgpp \
     --host=i586-pc-msdosdjgpp --prefix="$PREFIX-djgpp-prereqs" \
     --disable-shared --disable-fft 2>&1 | tee build.log
   cont_build_log "make $PARALLEL"
@@ -855,7 +855,7 @@ if in_list prereqs-djgpp BUILDLIST; then
   rm -rf build-mpfr-djgpp
   mkdir build-mpfr-djgpp
   pushd build-mpfr-djgpp
-  ../mpfr-3.1.5/configure --target=i586-pc-msdosdjgpp \
+  ../mpfr-4.1.0/configure --target=i586-pc-msdosdjgpp \
     --host=i586-pc-msdosdjgpp --prefix="$PREFIX-djgpp-prereqs" \
     --with-gmp="$PREFIX-djgpp-prereqs" --disable-shared 2>&1 | tee build.log
   cont_build_log "make $PARALLEL"
@@ -865,7 +865,7 @@ if in_list prereqs-djgpp BUILDLIST; then
   rm -rf build-mpc-djgpp
   mkdir build-mpc-djgpp
   pushd build-mpc-djgpp
-  ../mpc-1.0.3/configure --target=i586-pc-msdosdjgpp \
+  ../mpc-1.2.1/configure --target=i586-pc-msdosdjgpp \
     --host=i586-pc-msdosdjgpp --prefix="$PREFIX-djgpp-prereqs" \
     --with-gmp="$PREFIX-djgpp-prereqs" --with-mpfr="$PREFIX-djgpp-prereqs" \
     --disable-shared 2>&1 | tee build.log
@@ -876,7 +876,7 @@ if in_list prereqs-djgpp BUILDLIST; then
   rm -rf build-isl-djgpp
   mkdir build-isl-djgpp
   pushd build-isl-djgpp
-  ../isl-0.16.1/configure --target=i586-pc-msdosdjgpp \
+  ../isl-0.24/configure --target=i586-pc-msdosdjgpp \
     --host=i586-pc-msdosdjgpp --prefix="$PREFIX-djgpp-prereqs" \
     --disable-shared --with-gmp-prefix="$PREFIX-djgpp-prereqs" 2>&1 | \
     tee build.log
